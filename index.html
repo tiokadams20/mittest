@@ -1,0 +1,126 @@
+<!-- this test should be run in php/usually with XAMPP but i coded in js for easily run in github pages -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>answering MIT techinical test by tiokadams</title>
+</head>
+<body>
+
+<p>
+	How to use:<br>
+	input any string as an input value to be processed by an input order.
+	Input order should be filled with lowercased "v", "h" or any integer numbers.
+	<br>Example:<br>
+	input string: aku makan nasi<br>
+	input order: 3<br>
+	result will be displayed by the alert method
+</p>
+<input id="myInput" placeholder="input string">
+<input id="myInput2" placeholder="input order">
+
+<button id="myBtn" onclick="execute()">Button</button>
+
+<script type="text/javascript">
+	sources = [];
+
+	sources.push(["1","2","3","4","5","6","7","8","9","0"]);
+	sources.push(["q","w","e","r","t","y","u","i","o","p"]);
+	sources.push(["a","s","d","f","g","h","j","k","l",";"]);
+	sources.push(["z","x","c","v","b","n","m",",",".","/"]);
+
+	console.table(sources)
+
+
+	function execute(){
+		var input = document.getElementById("myInput").value
+		var order = document.getElementById("myInput2").value
+		const inputstring = input.split("");
+
+		// alert(input+" order "+hasil)
+		var hasil = ""
+
+		for(var alfa=0; alfa<inputstring.length; alfa++){
+			if(order == "v"){
+				hasil += transposeV(inputstring[alfa])
+			} 
+			else if(order == "h"){
+				hasil += transposeH(inputstring[alfa])
+			} 
+			else{
+				hasil += shifting(inputstring[alfa])
+			}
+			// hasil += hasil
+			// console.log("input = "+inputstring[alfa]+"v = "+transposeV(inputstring[alfa]))
+
+		}
+
+		//regex for tolerating the space value in shifting function
+		hasil = hasil.replace(/undefined/g, " ");
+		
+		alert("input = "+input+" -> hasil = "+hasil)
+		//vertically
+		function transposeV(val){
+			var result = ""
+			pointi = 0;
+			pointj = 0;
+			for(var i=0; i<sources.length; i++){
+				for(var j=0; j<sources[0].length; j++){
+					console.log(sources[i][j])
+					if(val == sources[i][j]){
+						pointi = 3-i;
+						pointj = j;
+					}
+				}
+			}
+			if(val == " "){
+				return " "
+			}
+			else{
+				return sources[pointi][pointj]
+			}
+		}
+
+		function transposeH(val){
+			var result = ""
+			pointi = 0;
+			pointj = 0;
+			for(var i=0; i<sources.length; i++){
+				for(var j=0; j<sources[0].length; j++){
+					console.log(sources[i][j])
+					if(val == sources[i][j]){
+						pointi = i;
+						pointj = 9-j;
+					}
+				}
+			}
+			if(val == " "){
+				return " "
+			}
+			else{
+				return sources[pointi][pointj]
+			}
+		}
+
+		function shifting(val){
+			temp = []
+			for(var i=0; i<sources.length; i++){
+				for(var j=0; j<sources[0].length; j++){
+					temp.push(sources[i][j])
+				}
+			}
+			pointtarget = 0;
+
+			
+			for(var j=0; j<temp.length; j++){
+				if(val == temp[j]){
+					pointtarget = Number(j)+Number(order)
+					console.log("haloo = "+pointtarget)
+					return temp[pointtarget]
+				}
+			}
+		}
+	}
+</script>
+</body>
+</html>
